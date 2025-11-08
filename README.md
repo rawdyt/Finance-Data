@@ -63,24 +63,24 @@ After loading the data using power query editor we made corrections for the erro
 - Step 7: We had Decimal numbers in the Totalamount Column we
   Rounded up those amount SQL code:
 
-    UPDATE finance
-    SET TotalAmount = ROUND(Quantity * UnitPrice, 2)
-    WHERE ABS(TotalAmount - (Quantity * UnitPrice)) > 0.5;
+      UPDATE finance
+      SET TotalAmount = ROUND(Quantity * UnitPrice, 2)
+      WHERE ABS(TotalAmount - (Quantity * UnitPrice)) > 0.5;
 
 - Step 8: We had some typos in the PaymentType column We used  
-   below SQL code to resolve this issue(Which we      
+   below SQL code to resolve this issue (Which we      
    alredy seen in Power BI in the filter for PaymentType 
    column):
 
-    Update [finance_dataset_with_issues]
-    SET PaymentType = CASE
-    WHEN LOWER(TRIM(PaymentType)) Like '%cred%' THEN  
-    'Credit    Card'
-    WHEN LOWER(TRIM(PaymentType)) Like '%up%' THEN 'UPI'
-    WHEN LOWER(TRIM(PaymentType)) Like '%wall%' THEN 'Wallet'
-    WHEN LOWER(TRIM(PaymentType)) Like '%cas%' THEN 'CASH'
-    ELSE 'Other'
-    END;
+      Update [finance_dataset_with_issues]
+      SET PaymentType = CASE
+      WHEN LOWER(TRIM(PaymentType)) Like '%cred%' THEN  
+      'Credit    Card'
+      WHEN LOWER(TRIM(PaymentType)) Like '%up%' THEN 'UPI'
+      WHEN LOWER(TRIM(PaymentType)) Like '%wall%' THEN 'Wallet'
+      WHEN LOWER(TRIM(PaymentType)) Like '%cas%' THEN 'CASH'
+      ELSE 'Other'
+      END;
 
 - Step 9: There were missing and n/a values in the CustomerID
   Column we replaced them with "UNKNOWN" using below code:
@@ -116,7 +116,7 @@ And below code to rectify the errors
 
 ### Now we have the cleaned data and we can proceed for the     DashBoard creation.  
   
------------------------Dashboard Creation-----------------------
+## Dashboard Creation
 
 - Step 1: We have added KPI's 
   1)Total Revenue
