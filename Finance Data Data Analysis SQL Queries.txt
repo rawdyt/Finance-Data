@@ -1,4 +1,4 @@
-	Create Database Finance;
+Create Database Finance;
 
 Use Finance;
 
@@ -125,6 +125,7 @@ WHERE TABLE_NAME = 'finance_dataset_with_issues';
 UPDATE [finance_dataset_with_issues]
 SET UNITPRICE = TotalAmount / Quantity
 WHERE UNITPRICE IS NULL;
+
 
 
 
