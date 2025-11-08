@@ -1,0 +1,139 @@
+Create Database Finance;
+
+Use Finance;
+
+
+SELECT * FROM [dbo].[finance_dataset_with_issues];
+
+-- To see if we have duplicate values in TransactionID
+
+SELECT TransactionID, COUNT(*) AS cnt
+FROM [dbo].[finance_dataset_with_issues]
+GROUP BY TransactionID
+HAVING COUNT(*) > 1;
+
+-- Deleting the duplicate records
+
+DELETE FROM [finance_dataset_with_issues] WHERE TRANSACTIONID IN(
+SELECT TransactionID FROM
+(SELECT *, ROW_NUMBER() OVER (PARTITION BY TransactionID ORDER BY TransactionID) AS ROW_NUM FROM
+[dbo].[finance_dataset_with_issues]) X
+WHERE X.ROW_NUM>1);
+
+-- To see the negative Quatity data
+
+SELECT * FROM [finance_dataset_with_issues]
+WHERE Quantity<0;
+
+-- Converting the negative data into Absulute value
+
+UPDATE [finance_dataset_with_issues]
+SET Quantity=abs(Quantity)
+WHERE Quantity <0;
+
+-- To see if we have wrong Total amount
+
+SELECT *, (Quantity * Unitprice) As Expectedtotal FROM [finance_dataset_with_issues]
+WHERE ABS(TotalAmount - (Quantity * Unitprice)) > 0.5;
+
+-- Making the correction
+
+UPDATE [finance_dataset_with_issues]
+SET TotalAmount = ROUND(Quantity * UnitPrice, 2)
+WHERE ABS(TotalAmount - (Quantity * UnitPrice)) > 0.5;
+
+
+
+Update [finance_dataset_with_issues]
+SET UnitPrice = nullif(replace(UnitPrice,'?',' '),' ')
+WHERE UnitPrice Like '%?%';
+
+-- Rectifing the Typo errors in the PaymentType Column
+
+Update [finance_dataset_with_issues]
+SET PaymentType = CASE
+WHEN LOWER(TRIM(PaymentType)) Like '%cred%' THEN 'Credit Card'
+WHEN LOWER(TRIM(PaymentType)) Like '%up%' THEN 'UPI'
+WHEN LOWER(TRIM(PaymentType)) Like '%net%' THEN 'Net Banking'
+WHEN LOWER(TRIM(PaymentType)) Like '%wall%' THEN 'Wallet'
+WHEN LOWER(TRIM(PaymentType)) Like '%cas%' THEN 'CASH'
+ELSE 'Other'
+END;
+
+-- Repacing the Null or N/A or ' ' (blank speces) with 'Unknown' value
+
+UPDATE [finance_dataset_with_issues]  
+SET CustomerID = 'UNKNOWN' WHERE CustomerID IS NULL OR TRIM(CustomerID) = '' 
+OR CustomerID IN ('NULL','N/A');
+
+-- Rounding off the TotalAmount for 2 decimals
+
+UPDATE [finance_dataset_with_issues]  
+SET TotalAmount = ROUND(TotalAmount,2);
+
+-- ##### KPI's
+
+
+-- Total Revenue
+SELECT SUM(TotalAmount) AS Total_Revenue FROM [finance_dataset_with_issues];
+
+-- Total Transaction
+SELECT DISTINCT COUNT(TransactionID) FROM [finance_dataset_with_issues];
+
+-- Average Order Value
+SELECT
+((SELECT SUM(TotalAmount) AS Total_Revenue FROM [finance_dataset_with_issues])/
+(SELECT DISTINCT COUNT(TransactionID) FROM [finance_dataset_with_issues]))
+
+-- % Paid
+
+	SELECT(
+	(SELECT SUM(TotalAmount) FROM [finance_dataset_with_issues]
+	WHERE INVOICESTATUS='Paid')/
+	((SELECT SUM(TotalAmount) FROM [finance_dataset_with_issues]
+	WHERE INVOICESTATUS='Paid')+(SELECT SUM(TotalAmount) FROM [finance_dataset_with_issues]
+	WHERE INVOICESTATUS='Pending')))*100
+
+
+-- Total Paid + Unpaid 
+
+    WITH CTE AS (
+    SELECT 
+	(SELECT SUM(TotalAmount) 
+	FROM [finance_dataset_with_issues]
+	WHERE INVOICESTATUS='Paid')
+	+
+	(SELECT SUM(TotalAmount) 
+	FROM [finance_dataset_with_issues]
+	WHERE INVOICESTATUS='Pending') AS TOTAL_AMOUNT)
+
+	SELECT * FROM CTE;
+
+-- To see if we have null, N/A, ' '
+
+SELECT * FROM [finance_dataset_with_issues]
+WHERE TotalAmount IS NULL OR LTRIM(RTRIM(CAST(UnitPrice AS VARCHAR(50)))) IN ('N/A',' ')
+
+-- To see the schema information
+
+SELECT COLUMN_NAME, 
+    DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'finance_dataset_with_issues';
+
+-- To replace the Null values in the unit price with the actual value
+
+UPDATE [finance_dataset_with_issues]
+SET UNITPRICE = TotalAmount / Quantity
+WHERE UNITPRICE IS NULL;
+
+
+
+
+
+
+
+
+
+
+
+
