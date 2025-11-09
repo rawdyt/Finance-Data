@@ -189,3 +189,7 @@ And below code to rectify the errors
 
    And Lowest Revenue by UPI with amount $3.59M
 
+ ## I have attached the .txt file which is consisting of all the  
+ ##SQL queries used in this project
+
+[📄 SQL Querrie](https://github.com/rawdyt/Finance-Data/blob/main/SQL_Queries.txt)
