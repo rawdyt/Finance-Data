@@ -4,10 +4,10 @@
 
 ## Problem Statement
 
-The finance department of a multinational company wants to analyze its overall financial performance across different regions, product categories, and sales representatives. However, the available transactional data contains multiple data quality issues such as inconsistent date formats, missing or invalid values, duplicate transactions, and unstandardized text fields (e.g., payment modes and invoice statuses).
+The finance department of a multinational company wants to analyze its overall financial performance for the difference region and product, categories and sales representatives. and the available transaction data have multiple data quality issues for exa.. date formates, missing and invalid values, duplicate rows.
 
-To build reliable financial insights, the company needs to clean, transform, and model the data efficiently using SQL and Power BI.
-The goal of this project is to design a Finance Data Analytics Dashboard that highlights key performance indicators (KPIs), while also demonstrating strong data cleaning and transformation skills.
+To calculate the insights, the company needs to clean, transform, and model the data efficiently using SQL and Power BI.
+The goal of this project is to design a Finance Data Analytics Dashboard that highlights key performance indicators (KPIs).
 
 
 ### Steps followed 
