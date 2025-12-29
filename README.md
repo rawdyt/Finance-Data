@@ -169,25 +169,20 @@ And below code to rectify the errors
 
 - Finance Data Insights Summary
 
-   1)Total Revenue: $18.88M across all transactions.
+   1) Paid vs unpaid percentages are nearly equal, signaling collection challenges
 
-   2)Total Count of Transactions 9529
+   2) Gujarat and Tamil Nadu require focused recovery strategies
 
-   3)The % of total amount paid is higher than the % of Total  
-  Unpaid but very close.
+   3) Net Banking preference suggests digital payment optimization opportunities
    
-   4)Gujarat is the state where highest Revenue is generated
+   4)Delhi market needs strategic intervention
 
-   5)Delhi is the state where lowest Revenue is generated
+## Recommendations
 
-   6)Gujarat and Tamil Nadu these are 2 States where the  
-   Unpaid Invoice amount higher than the Piad which shows low 
-   recovery rate.
-
-   7)Net Banlking Is payment method by which highest revenue 
-   is generated with amount $4.08M
-
-   And Lowest Revenue by UPI with amount $3.59M
+1) Implement automated payment reminders
+2) Strengthen collection processes in Gujarat and Tamil Nadu
+3) Develop market expansion plan for Delhi
+4) Promote Net Banking for higher transaction values
 
  ## I have attached the .txt file which is consisting of all the  
  ##SQL queries used in this project
